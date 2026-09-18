@@ -1,0 +1,2660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tee's Classic — Catering & Event Experiences</title>
+
+    <meta
+        name="description"
+        content="Tee's Classic Catering Solutions provides catering and equipment hire for weddings, corporate events and private celebrations in Lilongwe, Malawi."
+    >
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <style>
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        :root {
+            --ink: #17221d;
+            --forest: #17382d;
+            --forest-deep: #0d241c;
+            --cream: #f5f0e7;
+            --paper: #fbfaf7;
+            --gold: #c6a15b;
+            --muted: #737872;
+            --line: rgba(23, 34, 29, 0.13);
+            --white: #ffffff;
+
+            --display: "Playfair Display", Georgia, serif;
+            --body: "DM Sans", Arial, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: var(--body);
+            overflow-x: hidden;
+        }
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            border: 0;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           UTILITY
+        ========================================================= */
+
+        .container {
+            width: min(1240px, calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 34px;
+            height: 1px;
+            background: currentColor;
+        }
+
+        .display {
+            font-family: var(--display);
+            font-weight: 600;
+            letter-spacing: -0.035em;
+        }
+
+        .section-heading {
+            font-family: var(--display);
+            font-size: clamp(2.7rem, 5vw, 5.4rem);
+            line-height: 0.98;
+            font-weight: 600;
+            letter-spacing: -0.045em;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition:
+                opacity 0.8s ease,
+                transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .site-header {
+            position: fixed;
+            inset: 0 0 auto;
+            z-index: 1000;
+
+            background: rgba(13, 36, 28, 0.88);
+            backdrop-filter: blur(18px);
+
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .header-inner {
+            min-height: 78px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand {
+            color: white;
+
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+        }
+
+        .brand span {
+            color: var(--gold);
+        }
+
+        .desktop-nav {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+
+            color: rgba(255,255,255,0.78);
+            font-size: 0.82rem;
+        }
+
+        .desktop-nav a {
+            transition: color 0.25s ease;
+        }
+
+        .desktop-nav a:hover {
+            color: white;
+        }
+
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 12px 18px;
+
+            background: var(--gold);
+            color: var(--forest-deep);
+
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .header-cta:hover {
+            transform: translateY(-2px);
+            background: #d6b875;
+        }
+
+        .mobile-toggle {
+            display: none;
+
+            background: transparent;
+            color: white;
+
+            font-size: 1.4rem;
+        }
+
+        /* =========================================================
+           HERO
+        ========================================================= */
+
+        .hero {
+            min-height: 100svh;
+            position: relative;
+
+            background: var(--forest-deep);
+            color: white;
+
+            display: flex;
+            align-items: flex-end;
+
+            overflow: hidden;
+        }
+
+        .hero-slide {
+            position: absolute;
+            inset: 0;
+
+            opacity: 0;
+            transition: opacity 1.2s ease;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-slide::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(7, 21, 16, 0.88) 0%,
+                    rgba(7, 21, 16, 0.64) 40%,
+                    rgba(7, 21, 16, 0.16) 100%
+                );
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+
+            width: min(1240px, calc(100% - 48px));
+            margin-inline: auto;
+
+            padding:
+                180px 0
+                90px;
+        }
+
+        .hero-copy {
+            width: min(780px, 100%);
+        }
+
+        .hero .eyebrow {
+            margin-bottom: 28px;
+        }
+
+        .hero-title {
+            font-family: var(--display);
+            font-size: clamp(4rem, 8vw, 8.5rem);
+            line-height: 0.87;
+            font-weight: 600;
+            letter-spacing: -0.06em;
+
+            margin-bottom: 32px;
+        }
+
+        .hero-title em {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        .hero-description {
+            max-width: 600px;
+
+            color: rgba(255,255,255,0.76);
+            font-size: clamp(1rem, 1.5vw, 1.18rem);
+            line-height: 1.75;
+
+            margin-bottom: 38px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+
+            min-height: 52px;
+            padding: 0 22px;
+
+            font-size: 0.76rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+
+            transition:
+                transform 0.25s ease,
+                background 0.25s ease;
+        }
+
+        .button-primary {
+            background: var(--gold);
+            color: var(--forest-deep);
+        }
+
+        .button-secondary {
+            border: 1px solid rgba(255,255,255,0.32);
+            color: white;
+            background: rgba(255,255,255,0.04);
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .hero-meta {
+            position: absolute;
+            right: 0;
+            bottom: 90px;
+
+            display: flex;
+            align-items: center;
+            gap: 26px;
+
+            color: rgba(255,255,255,0.65);
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta span::before {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+        }
+
+        .slide-counter {
+            position: absolute;
+            right: 48px;
+            bottom: 38px;
+
+            z-index: 4;
+
+            display: flex;
+            gap: 8px;
+        }
+
+        .slide-dot {
+            width: 34px;
+            height: 2px;
+            background: rgba(255,255,255,0.35);
+            transition: background 0.4s ease;
+        }
+
+        .slide-dot.active {
+            background: var(--gold);
+        }
+
+        /* =========================================================
+           TRUST STRIP
+        ========================================================= */
+
+        .trust-strip {
+            background: var(--cream);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .trust-item {
+            min-height: 145px;
+
+            padding: 30px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            border-right: 1px solid var(--line);
+        }
+
+        .trust-item:last-child {
+            border-right: 0;
+        }
+
+        .trust-number {
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 12px;
+        }
+
+        .trust-title {
+            font-family: var(--display);
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+        }
+
+        .trust-text {
+            color: var(--muted);
+            font-size: 0.78rem;
+        }
+
+        /* =========================================================
+           INTRO
+        ========================================================= */
+
+        .intro {
+            padding: 150px 0;
+        }
+
+        .intro-grid {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            gap: 100px;
+            align-items: center;
+        }
+
+        .intro-image {
+            position: relative;
+        }
+
+        .intro-image img {
+            aspect-ratio: 0.82;
+            object-fit: cover;
+        }
+
+        .image-note {
+            position: absolute;
+            right: -35px;
+            bottom: 35px;
+
+            padding: 22px;
+
+            width: 190px;
+
+            background: var(--forest);
+            color: white;
+
+            font-size: 0.75rem;
+            line-height: 1.6;
+        }
+
+        .image-note strong {
+            display: block;
+            color: var(--gold);
+            font-family: var(--display);
+            font-size: 1.35rem;
+            margin-bottom: 6px;
+        }
+
+        .intro-copy .eyebrow {
+            margin-bottom: 24px;
+        }
+
+        .intro-copy .section-heading {
+            margin-bottom: 28px;
+        }
+
+        .intro-copy p {
+            max-width: 620px;
+
+            color: var(--muted);
+            font-size: 1rem;
+            line-height: 1.9;
+
+            margin-bottom: 30px;
+        }
+
+        .text-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+
+            color: var(--forest);
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+
+            border-bottom: 1px solid var(--gold);
+            padding-bottom: 7px;
+        }
+
+        /* =========================================================
+           EXPERIENCES
+        ========================================================= */
+
+        .experiences {
+            padding: 140px 0;
+
+            background: var(--forest);
+            color: white;
+        }
+
+        .experiences-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .experiences-header .section-heading {
+            max-width: 720px;
+        }
+
+        .experiences-header p {
+            max-width: 340px;
+
+            color: rgba(255,255,255,0.62);
+            line-height: 1.75;
+        }
+
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .experience-card {
+            position: relative;
+            min-height: 580px;
+
+            overflow: hidden;
+
+            background: #0c2119;
+        }
+
+        .experience-card img {
+            height: 100%;
+            object-fit: cover;
+
+            opacity: 0.7;
+
+            transition:
+                transform 0.8s ease,
+                opacity 0.8s ease;
+        }
+
+        .experience-card:hover img {
+            transform: scale(1.06);
+            opacity: 0.85;
+        }
+
+        .experience-card::after {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    0deg,
+                    rgba(5, 17, 13, 0.94) 0%,
+                    rgba(5, 17, 13, 0.2) 65%,
+                    transparent 100%
+                );
+        }
+
+        .experience-content {
+            position: absolute;
+            inset: auto 30px 30px;
+
+            z-index: 2;
+        }
+
+        .experience-number {
+            color: var(--gold);
+            font-size: 0.68rem;
+            letter-spacing: 0.15em;
+            margin-bottom: 14px;
+        }
+
+        .experience-content h3 {
+            font-family: var(--display);
+            font-size: 2.5rem;
+            line-height: 1;
+            margin-bottom: 12px;
+        }
+
+        .experience-content p {
+            color: rgba(255,255,255,0.72);
+            font-size: 0.85rem;
+            line-height: 1.65;
+
+            max-width: 330px;
+
+            margin-bottom: 20px;
+        }
+
+        .experience-link {
+            color: white;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* =========================================================
+           FOOD
+        ========================================================= */
+
+        .food {
+            padding: 150px 0;
+        }
+
+        .food-header {
+            display: grid;
+            grid-template-columns: 1fr 0.7fr;
+            gap: 80px;
+            align-items: end;
+
+            margin-bottom: 70px;
+        }
+
+        .food-header p {
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .food-gallery {
+            display: grid;
+            grid-template-columns: 1.25fr 0.75fr;
+            grid-template-rows: 310px 310px;
+            gap: 12px;
+        }
+
+        .food-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-image:first-child {
+            grid-row: 1 / 3;
+        }
+
+        .food-image img {
+            height: 100%;
+            object-fit: cover;
+
+            transition: transform 0.7s ease;
+        }
+
+        .food-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .food-label {
+            position: absolute;
+            left: 20px;
+            bottom: 20px;
+
+            padding: 8px 11px;
+
+            background: rgba(13,36,28,0.86);
+            color: white;
+
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        /* =========================================================
+           MENU
+        ========================================================= */
+
+        .menu-section {
+            padding: 140px 0;
+
+            background: var(--cream);
+        }
+
+        .menu-layout {
+            display: grid;
+            grid-template-columns: 0.7fr 1.3fr;
+            gap: 100px;
+        }
+
+        .menu-intro .section-heading {
+            margin: 20px 0 25px;
+        }
+
+        .menu-intro p {
+            color: var(--muted);
+            line-height: 1.8;
+            margin-bottom: 28px;
+        }
+
+        .menu-list {
+            border-top: 1px solid var(--line);
+        }
+
+        .menu-item {
+            padding: 28px 0;
+
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 40px;
+
+            border-bottom: 1px solid var(--line);
+        }
+
+        .menu-item h3 {
+            font-family: var(--display);
+            font-size: 1.7rem;
+            margin-bottom: 7px;
+        }
+
+        .menu-item p {
+            color: var(--muted);
+            font-size: 0.82rem;
+        }
+
+        .menu-index {
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 700;
+        }
+
+        /* =========================================================
+           EQUIPMENT
+        ========================================================= */
+
+        .equipment {
+            padding: 150px 0;
+
+            background: var(--forest-deep);
+            color: white;
+        }
+
+        .equipment-top {
+            display: grid;
+            grid-template-columns: 1fr 0.7fr;
+            gap: 80px;
+            align-items: end;
+
+            margin-bottom: 80px;
+        }
+
+        .equipment-top p {
+            color: rgba(255,255,255,0.6);
+            line-height: 1.8;
+        }
+
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            border-top: 1px solid rgba(255,255,255,0.16);
+            border-bottom: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .equipment-stat {
+            padding: 50px 30px;
+
+            border-right: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .equipment-stat:last-child {
+            border-right: 0;
+        }
+
+        .equipment-number {
+            font-family: var(--display);
+            color: var(--gold);
+
+            font-size: clamp(3.5rem, 6vw, 6rem);
+            line-height: 0.9;
+
+            margin-bottom: 18px;
+        }
+
+        .equipment-label {
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.68);
+        }
+
+        /* =========================================================
+           GALLERY
+        ========================================================= */
+
+        .events {
+            padding: 150px 0;
+        }
+
+        .events-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            margin-bottom: 60px;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            grid-auto-rows: 170px;
+            gap: 12px;
+        }
+
+        .event-image {
+            overflow: hidden;
+        }
+
+        .event-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            transition: transform 0.7s ease;
+        }
+
+        .event-image:hover img {
+            transform: scale(1.05);
+        }
+
+        .event-image:nth-child(1) {
+            grid-column: span 7;
+            grid-row: span 3;
+        }
+
+        .event-image:nth-child(2) {
+            grid-column: span 5;
+            grid-row: span 2;
+        }
+
+        .event-image:nth-child(3) {
+            grid-column: span 5;
+            grid-row: span 3;
+        }
+
+        .event-image:nth-child(4) {
+            grid-column: span 4;
+            grid-row: span 2;
+        }
+
+        .event-image:nth-child(5) {
+            grid-column: span 3;
+            grid-row: span 2;
+        }
+
+        /* =========================================================
+           TESTIMONIAL
+        ========================================================= */
+
+        .testimonial {
+            padding: 150px 0;
+
+            background: var(--cream);
+        }
+
+        .testimonial-inner {
+            width: min(900px, 100%);
+            margin-inline: auto;
+
+            text-align: center;
+        }
+
+        .testimonial-mark {
+            color: var(--gold);
+            font-family: Georgia, serif;
+            font-size: 5rem;
+            line-height: 0.7;
+
+            margin-bottom: 30px;
+        }
+
+        .testimonial blockquote {
+            font-family: var(--display);
+            font-size: clamp(2rem, 4vw, 4rem);
+            line-height: 1.12;
+            letter-spacing: -0.035em;
+        }
+
+        .testimonial-person {
+            margin-top: 30px;
+
+            color: var(--muted);
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        /* =========================================================
+           WHY US
+        ========================================================= */
+
+        .why {
+            padding: 150px 0;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 100px;
+        }
+
+        .why-copy .section-heading {
+            margin-top: 20px;
+        }
+
+        .why-list {
+            border-top: 1px solid var(--line);
+        }
+
+        .why-item {
+            padding: 32px 0;
+
+            display: grid;
+            grid-template-columns: 60px 1fr;
+            gap: 25px;
+
+            border-bottom: 1px solid var(--line);
+        }
+
+        .why-number {
+            color: var(--gold);
+            font-size: 0.72rem;
+            font-weight: 700;
+        }
+
+        .why-item h3 {
+            font-family: var(--display);
+            font-size: 1.65rem;
+            margin-bottom: 8px;
+        }
+
+        .why-item p {
+            max-width: 600px;
+            color: var(--muted);
+            line-height: 1.75;
+            font-size: 0.86rem;
+        }
+
+        /* =========================================================
+           ENQUIRY
+        ========================================================= */
+
+        .enquiry {
+            padding: 140px 0;
+
+            background: var(--forest);
+            color: white;
+        }
+
+        .enquiry-grid {
+            display: grid;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 100px;
+        }
+
+        .enquiry-copy .section-heading {
+            margin: 20px 0 25px;
+        }
+
+        .enquiry-copy > p {
+            color: rgba(255,255,255,0.64);
+            line-height: 1.8;
+            margin-bottom: 35px;
+        }
+
+        .contact-direct {
+            padding-top: 25px;
+            border-top: 1px solid rgba(255,255,255,0.16);
+        }
+
+        .contact-direct span {
+            display: block;
+
+            color: var(--gold);
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+
+            margin-bottom: 8px;
+        }
+
+        .contact-direct a {
+            font-size: 1rem;
+        }
+
+        .enquiry-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field.full {
+            grid-column: 1 / -1;
+        }
+
+        .field label {
+            color: rgba(255,255,255,0.64);
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+
+            padding: 15px 0;
+
+            color: white;
+            background: transparent;
+
+            border: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.22);
+
+            outline: none;
+
+            border-radius: 0;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--gold);
+        }
+
+        .field select option {
+            color: var(--ink);
+        }
+
+        .field textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-submit {
+            grid-column: 1 / -1;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 15px;
+        }
+
+        .form-note {
+            max-width: 310px;
+
+            color: rgba(255,255,255,0.42);
+            font-size: 0.68rem;
+            line-height: 1.6;
+        }
+
+        /* =========================================================
+           FOOTER
+        ========================================================= */
+
+        footer {
+            background: var(--forest-deep);
+            color: white;
+
+            padding: 80px 0 35px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1.4fr 0.6fr 0.6fr 0.8fr;
+            gap: 60px;
+
+            padding-bottom: 70px;
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+        }
+
+        .footer-brand {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+
+            margin-bottom: 18px;
+        }
+
+        .footer-brand span {
+            color: var(--gold);
+        }
+
+        .footer-intro {
+            max-width: 330px;
+
+            color: rgba(255,255,255,0.5);
+            font-size: 0.8rem;
+            line-height: 1.8;
+        }
+
+        .footer-column h4 {
+            color: var(--gold);
+
+            font-size: 0.67rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+
+            margin-bottom: 18px;
+        }
+
+        .footer-column a,
+        .footer-column p {
+            display: block;
+
+            color: rgba(255,255,255,0.64);
+            font-size: 0.78rem;
+
+            margin-bottom: 11px;
+
+            transition: color 0.2s ease;
+        }
+
+        .footer-column a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 25px;
+
+            display: flex;
+            justify-content: space-between;
+
+            color: rgba(255,255,255,0.34);
+            font-size: 0.65rem;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 900px) {
+
+            .desktop-nav,
+            .header-cta {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: block;
+            }
+
+            .hero-content {
+                padding-top: 150px;
+            }
+
+            .hero-meta {
+                display: none;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .trust-item:nth-child(2) {
+                border-right: 0;
+            }
+
+            .intro-grid,
+            .menu-layout,
+            .why-grid,
+            .enquiry-grid {
+                grid-template-columns: 1fr;
+                gap: 60px;
+            }
+
+            .intro-image {
+                max-width: 600px;
+            }
+
+            .experience-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experience-card {
+                min-height: 500px;
+            }
+
+            .food-header,
+            .equipment-top {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .equipment-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .equipment-stat:nth-child(2) {
+                border-right: 0;
+            }
+
+            .equipment-stat:nth-child(-n+2) {
+                border-bottom: 1px solid rgba(255,255,255,0.16);
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr 1fr;
+                grid-auto-rows: 220px;
+            }
+
+            .event-image:nth-child(n) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .event-image:first-child {
+                grid-column: span 2;
+                grid-row: span 2;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .container,
+            .hero-content {
+                width: min(100% - 32px, 1240px);
+            }
+
+            .site-header .header-inner {
+                min-height: 68px;
+            }
+
+            .hero-title {
+                font-size: clamp(3.5rem, 17vw, 5rem);
+            }
+
+            .hero-description {
+                font-size: 0.92rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button {
+                width: 100%;
+            }
+
+            .slide-counter {
+                right: 16px;
+                bottom: 22px;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .trust-item {
+                min-height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .trust-item:last-child {
+                border-bottom: 0;
+            }
+
+            .intro,
+            .experiences,
+            .food,
+            .menu-section,
+            .equipment,
+            .events,
+            .testimonial,
+            .why,
+            .enquiry {
+                padding: 90px 0;
+            }
+
+            .image-note {
+                right: 12px;
+                bottom: 12px;
+            }
+
+            .food-gallery {
+                display: grid;
+                grid-template-columns: 1fr;
+                grid-template-rows: 400px 240px 240px;
+            }
+
+            .food-image:first-child {
+                grid-row: auto;
+            }
+
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .equipment-stat {
+                border-right: 0;
+                border-bottom: 1px solid rgba(255,255,255,0.16);
+            }
+
+            .equipment-stat:last-child {
+                border-bottom: 0;
+            }
+
+            .events-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .event-image:nth-child(n) {
+                grid-column: span 1;
+                grid-row: span 1;
+            }
+
+            .event-image:first-child {
+                grid-column: span 1;
+                grid-row: span 2;
+            }
+
+            .enquiry-form {
+                grid-template-columns: 1fr;
+            }
+
+            .field.full {
+                grid-column: auto;
+            }
+
+            .form-submit {
+                align-items: stretch;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .form-submit .button {
+                width: 100%;
+            }
+
+            .footer-top {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="site-header">
+
+    <div class="container header-inner">
+
+        <a href="#home" class="brand">
+            TEE'S <span>CLASSIC</span>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="#experiences">Experiences</a>
+            <a href="#food">Food</a>
+            <a href="#equipment">Equipment</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <a href="#enquire" class="header-cta">
+            Request a Quote →
+        </a>
+
+        <button
+            class="mobile-toggle"
+            aria-label="Open navigation"
+        >
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero" id="home">
+
+    <!--
+        TEMPORARY PHOTOS.
+        Replace these with actual Tee's Classic photographs.
+    -->
+
+    <div class="hero-slide active">
+
+        <img
+            src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2200&q=90"
+            alt="Elegant catered food presentation"
+        >
+
+    </div>
+
+    <div class="hero-slide">
+
+        <img
+            src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=2200&q=90"
+            alt="Elegant event table"
+        >
+
+    </div>
+
+    <div class="hero-slide">
+
+        <img
+            src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=2200&q=90"
+            alt="Catering event setup"
+        >
+
+    </div>
+
+
+    <div class="hero-content">
+
+        <div class="hero-copy">
+
+            <div class="eyebrow">
+                Catering & Event Experiences · Lilongwe
+            </div>
+
+            <h1 class="hero-title">
+                Your occasion<br>
+                deserves <em>more.</em>
+            </h1>
+
+            <p class="hero-description">
+                Thoughtfully prepared food, beautiful presentation and
+                dependable event catering for weddings, corporate functions
+                and private celebrations.
+            </p>
+
+            <div class="hero-actions">
+
+                <a
+                    href="#enquire"
+                    class="button button-primary"
+                >
+                    Plan Your Event →
+                </a>
+
+                <a
+                    href="#food"
+                    class="button button-secondary"
+                >
+                    Explore Our Food
+                </a>
+
+            </div>
+
+        </div>
+
+        <div class="hero-meta">
+
+            <span>Weddings</span>
+            <span>Corporate</span>
+            <span>Private Events</span>
+            <span>Equipment Hire</span>
+
+        </div>
+
+    </div>
+
+
+    <div class="slide-counter">
+
+        <span class="slide-dot active"></span>
+        <span class="slide-dot"></span>
+        <span class="slide-dot"></span>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TRUST STRIP
+========================================================= -->
+
+<section class="trust-strip">
+
+    <div class="container trust-grid">
+
+        <div class="trust-item reveal">
+            <div class="trust-number">01</div>
+            <div class="trust-title">Event Catering</div>
+            <div class="trust-text">
+                Catering for special occasions and gatherings.
+            </div>
+        </div>
+
+        <div class="trust-item reveal">
+            <div class="trust-number">02</div>
+            <div class="trust-title">Beautiful Setup</div>
+            <div class="trust-text">
+                Food and presentation designed for the occasion.
+            </div>
+        </div>
+
+        <div class="trust-item reveal">
+            <div class="trust-number">03</div>
+            <div class="trust-title">Equipment Hire</div>
+            <div class="trust-text">
+                Catering equipment available for your event.
+            </div>
+        </div>
+
+        <div class="trust-item reveal">
+            <div class="trust-number">04</div>
+            <div class="trust-title">Lilongwe Based</div>
+            <div class="trust-text">
+                Serving clients from Lilongwe, Malawi.
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ABOUT / INTRO
+========================================================= -->
+
+<section class="intro" id="about">
+
+    <div class="container intro-grid">
+
+        <div class="intro-image reveal">
+
+            <img
+                src="https://images.unsplash.com/photo-1519671282429-b44660ead0a7?auto=format&fit=crop&w=1200&q=85"
+                alt="Elegant catered event"
+            >
+
+            <div class="image-note">
+
+                <strong>Made for moments.</strong>
+
+                From intimate celebrations
+                to larger gatherings.
+
+            </div>
+
+        </div>
+
+
+        <div class="intro-copy reveal">
+
+            <div class="eyebrow">
+                The Tee's Classic Approach
+            </div>
+
+            <h2 class="section-heading">
+                From the first plate to the final guest.
+            </h2>
+
+            <p>
+                Tee's Classic Catering Solutions provides catering and
+                equipment hire for occasions where presentation, consistency
+                and service matter.
+            </p>
+
+            <p>
+                Based in Lilongwe, we help clients prepare for weddings,
+                corporate events, private celebrations and other special
+                occasions with food and catering equipment suited to the event.
+            </p>
+
+            <a href="#enquire" class="text-link">
+                Start planning →
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EXPERIENCES
+========================================================= -->
+
+<section class="experiences" id="experiences">
+
+    <div class="container">
+
+        <div class="experiences-header reveal">
+
+            <div>
+
+                <div class="eyebrow">
+                    Catering for the occasion
+                </div>
+
+                <h2 class="section-heading">
+                    Different events.<br>
+                    Same attention to detail.
+                </h2>
+
+            </div>
+
+            <p>
+                Tell us what you're planning and we can discuss the
+                catering and equipment requirements around your event.
+            </p>
+
+        </div>
+
+
+        <div class="experience-grid">
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1200&q=85"
+                    alt="Wedding event"
+                >
+
+                <div class="experience-content">
+
+                    <div class="experience-number">
+                        01 / WEDDINGS
+                    </div>
+
+                    <h3>
+                        Beautiful food.
+                        Beautifully presented.
+                    </h3>
+
+                    <p>
+                        Catering and equipment for wedding celebrations,
+                        bridal lunches and reception events.
+                    </p>
+
+                    <a href="#enquire" class="experience-link">
+                        Discuss your wedding →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=85"
+                    alt="Corporate event"
+                >
+
+                <div class="experience-content">
+
+                    <div class="experience-number">
+                        02 / CORPORATE
+                    </div>
+
+                    <h3>
+                        Professional
+                        catering for the room.
+                    </h3>
+
+                    <p>
+                        Catering solutions for corporate gatherings,
+                        meetings and special business events.
+                    </p>
+
+                    <a href="#enquire" class="experience-link">
+                        Discuss your event →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <article class="experience-card reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1529543544282-ea669407fca3?auto=format&fit=crop&w=1200&q=85"
+                    alt="Private celebration"
+                >
+
+                <div class="experience-content">
+
+                    <div class="experience-number">
+                        03 / PRIVATE
+                    </div>
+
+                    <h3>
+                        Good food belongs
+                        at every celebration.
+                    </h3>
+
+                    <p>
+                        Private parties, family gatherings and occasions
+                        that deserve something special.
+                    </p>
+
+                    <a href="#enquire" class="experience-link">
+                        Plan your celebration →
+                    </a>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOD
+========================================================= -->
+
+<section class="food" id="food">
+
+    <div class="container">
+
+        <div class="food-header reveal">
+
+            <div>
+
+                <div class="eyebrow">
+                    The food
+                </div>
+
+                <h2 class="section-heading">
+                    Come hungry.<br>
+                    Leave remembering it.
+                </h2>
+
+            </div>
+
+            <p>
+                Food is one of the most important parts of any event.
+                The final gallery should showcase Tee's Classic's
+                actual dishes, presentation and service.
+            </p>
+
+        </div>
+
+
+        <div class="food-gallery">
+
+            <div class="food-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=1400&q=85"
+                    alt="Fresh catered dish"
+                >
+
+                <span class="food-label">
+                    SIGNATURE FOOD
+                </span>
+
+            </div>
+
+
+            <div class="food-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&w=1000&q=85"
+                    alt="Fresh event food"
+                >
+
+                <span class="food-label">
+                    FRESHLY PREPARED
+                </span>
+
+            </div>
+
+
+            <div class="food-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85"
+                    alt="Food presentation"
+                >
+
+                <span class="food-label">
+                    EVENT PRESENTATION
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MENU
+========================================================= -->
+
+<section class="menu-section">
+
+    <div class="container menu-layout">
+
+        <div class="menu-intro reveal">
+
+            <div class="eyebrow">
+                Menu direction
+            </div>
+
+            <h2 class="section-heading">
+                A menu built around your occasion.
+            </h2>
+
+            <p>
+                Menu details should be replaced with Tee's Classic's
+                confirmed offerings. The structure below gives visitors
+                an easier way to understand the service.
+            </p>
+
+            <a href="#enquire" class="text-link">
+                Ask about a menu →
+            </a>
+
+        </div>
+
+
+        <div class="menu-list">
+
+            <div class="menu-item reveal">
+
+                <div>
+                    <h3>Breakfast & Brunch</h3>
+                    <p>
+                        Light bites, breakfast options and event refreshments.
+                    </p>
+                </div>
+
+                <span class="menu-index">01</span>
+
+            </div>
+
+
+            <div class="menu-item reveal">
+
+                <div>
+                    <h3>Lunch & Dinner</h3>
+                    <p>
+                        Catering options for larger meals and formal events.
+                    </p>
+                </div>
+
+                <span class="menu-index">02</span>
+
+            </div>
+
+
+            <div class="menu-item reveal">
+
+                <div>
+                    <h3>Event Snacks</h3>
+                    <p>
+                        Scones, snacks and other options for gatherings.
+                    </p>
+                </div>
+
+                <span class="menu-index">03</span>
+
+            </div>
+
+
+            <div class="menu-item reveal">
+
+                <div>
+                    <h3>Custom Menus</h3>
+                    <p>
+                        Discuss your guest count and event requirements
+                        with the Tee's Classic team.
+                    </p>
+                </div>
+
+                <span class="menu-index">04</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EQUIPMENT
+========================================================= -->
+
+<section class="equipment" id="equipment">
+
+    <div class="container">
+
+        <div class="equipment-top reveal">
+
+            <div>
+
+                <div class="eyebrow">
+                    Equipment hire
+                </div>
+
+                <h2 class="section-heading">
+                    More than catering.
+                    We can help set the table.
+                </h2>
+
+            </div>
+
+            <p>
+                Tee's Classic also provides catering equipment for events.
+                The quantities below are taken from the existing business
+                information and should be kept accurate as inventory changes.
+            </p>
+
+        </div>
+
+
+        <div class="equipment-grid">
+
+            <div class="equipment-stat reveal">
+
+                <div class="equipment-number">
+                    600
+                </div>
+
+                <div class="equipment-label">
+                    Dinner Plates
+                </div>
+
+            </div>
+
+
+            <div class="equipment-stat reveal">
+
+                <div class="equipment-number">
+                    80
+                </div>
+
+                <div class="equipment-label">
+                    Silver Chafing Dishes
+                </div>
+
+            </div>
+
+
+            <div class="equipment-stat reveal">
+
+                <div class="equipment-number">
+                    14
+                </div>
+
+                <div class="equipment-label">
+                    Gold Chafing Dishes
+                </div>
+
+            </div>
+
+
+            <div class="equipment-stat reveal">
+
+                <div class="equipment-number">
+                    100
+                </div>
+
+                <div class="equipment-label">
+                    Serving Spoons
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     EVENT GALLERY
+========================================================= -->
+
+<section class="events" id="gallery">
+
+    <div class="container">
+
+        <div class="events-header reveal">
+
+            <div>
+
+                <div class="eyebrow">
+                    The gallery
+                </div>
+
+                <h2 class="section-heading">
+                    Imagine your event here.
+                </h2>
+
+            </div>
+
+            <a href="#enquire" class="text-link">
+                Plan your event →
+            </a>
+
+        </div>
+
+
+        <div class="events-grid">
+
+            <div class="event-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?auto=format&fit=crop&w=1400&q=85"
+                    alt="Event setup"
+                >
+
+            </div>
+
+
+            <div class="event-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1200&q=85"
+                    alt="Table setting"
+                >
+
+            </div>
+
+
+            <div class="event-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=1200&q=85"
+                    alt="Catering service"
+                >
+
+            </div>
+
+
+            <div class="event-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=1000&q=85"
+                    alt="Celebration"
+                >
+
+            </div>
+
+
+            <div class="event-image reveal">
+
+                <img
+                    src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1000&q=85"
+                    alt="Dinner event"
+                >
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TESTIMONIAL
+========================================================= -->
+
+<section class="testimonial">
+
+    <div class="container testimonial-inner reveal">
+
+        <div class="testimonial-mark">
+            “
+        </div>
+
+        <blockquote>
+            Your real customer stories belong here.
+            Don't manufacture testimonials.
+        </blockquote>
+
+        <div class="testimonial-person">
+            Replace with a verified client review · Event type
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     WHY TEE'S CLASSIC
+========================================================= -->
+
+<section class="why">
+
+    <div class="container why-grid">
+
+        <div class="why-copy reveal">
+
+            <div class="eyebrow">
+                Why Tee's Classic
+            </div>
+
+            <h2 class="section-heading">
+                Don't just tell people you're good.
+                Show them.
+            </h2>
+
+        </div>
+
+
+        <div class="why-list">
+
+            <div class="why-item reveal">
+
+                <div class="why-number">01</div>
+
+                <div>
+                    <h3>Food that looks as good as it tastes.</h3>
+
+                    <p>
+                        Real photography should demonstrate the quality,
+                        variety and presentation of the food.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="why-item reveal">
+
+                <div class="why-number">02</div>
+
+                <div>
+                    <h3>Setups designed for the occasion.</h3>
+
+                    <p>
+                        Weddings, corporate events and private celebrations
+                        have different requirements. The website should
+                        make those differences obvious.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="why-item reveal">
+
+                <div class="why-number">03</div>
+
+                <div>
+                    <h3>Equipment for larger gatherings.</h3>
+
+                    <p>
+                        The available inventory gives customers another
+                        reason to consider Tee's Classic for their event.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <div class="why-item reveal">
+
+                <div class="why-number">04</div>
+
+                <div>
+                    <h3>A direct path to your team.</h3>
+
+                    <p>
+                        Visitors shouldn't have to hunt for a phone number,
+                        email address or enquiry route.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ENQUIRY
+========================================================= -->
+
+<section class="enquiry" id="enquire">
+
+    <div class="container enquiry-grid">
+
+        <div class="enquiry-copy reveal">
+
+            <div class="eyebrow">
+                Start planning
+            </div>
+
+            <h2 class="section-heading">
+                Planning something special?
+            </h2>
+
+            <p>
+                Tell us a little about your event. The more we know,
+                the easier it is to understand what catering and
+                equipment you'll need.
+            </p>
+
+
+            <div class="contact-direct">
+
+                <span>Prefer to talk directly?</span>
+
+                <a href="tel:+265884413302">
+                    +265 884 41 33 02
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <form
+            class="enquiry-form reveal"
+            id="eventForm"
+        >
+
+            <div class="field">
+
+                <label for="name">
+                    Your name
+                </label>
+
+                <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Full name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="phone">
+                    Phone / WhatsApp
+                </label>
+
+                <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    placeholder="+265..."
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="event">
+                    Event type
+                </label>
+
+                <select
+                    id="event"
+                    name="event"
+                    required
+                >
+
+                    <option value="">
+                        Select event
+                    </option>
+
+                    <option>
+                        Wedding
+                    </option>
+
+                    <option>
+                        Corporate Event
+                    </option>
+
+                    <option>
+                        Private Celebration
+                    </option>
+
+                    <option>
+                        Equipment Hire
+                    </option>
+
+                    <option>
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="date">
+                    Event date
+                </label>
+
+                <input
+                    id="date"
+                    name="date"
+                    type="date"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="guests">
+                    Number of guests
+                </label>
+
+                <input
+                    id="guests"
+                    name="guests"
+                    type="number"
+                    min="1"
+                    placeholder="e.g. 120"
+                    required
+                >
+
+            </div>
+
+
+            <div class="field">
+
+                <label for="location">
+                    Event location
+                </label>
+
+                <input
+                    id="location"
+                    name="location"
+                    type="text"
+                    placeholder="Area / venue"
+                >
+
+            </div>
+
+
+            <div class="field full">
+
+                <label for="message">
+                    Tell us about your event
+                </label>
+
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us what you're planning..."
+                ></textarea>
+
+            </div>
+
+
+            <div class="form-submit">
+
+                <p class="form-note">
+                    This prototype currently doesn't submit to a backend.
+                    Connect this form to email, WhatsApp, a CRM or an API
+                    before production.
+                </p>
+
+                <button
+                    class="button button-primary"
+                    type="submit"
+                >
+                    Request a Quote →
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+        <div class="footer-top">
+
+            <div>
+
+                <div class="footer-brand">
+                    TEE'S <span>CLASSIC</span>
+                </div>
+
+                <p class="footer-intro">
+                    Catering and equipment hire for weddings,
+                    corporate events, private celebrations and
+                    special occasions in Lilongwe.
+                </p>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Explore</h4>
+
+                <a href="#home">Home</a>
+                <a href="#experiences">Experiences</a>
+                <a href="#food">Food</a>
+                <a href="#gallery">Gallery</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Services</h4>
+
+                <a href="#experiences">Weddings</a>
+                <a href="#experiences">Corporate</a>
+                <a href="#experiences">Private Events</a>
+                <a href="#equipment">Equipment Hire</a>
+
+            </div>
+
+
+            <div class="footer-column">
+
+                <h4>Contact</h4>
+
+                <p>
+                    Kapoloma,<br>
+                    Lilongwe Area 18,<br>
+                    Malawi
+                </p>
+
+                <a href="tel:+265884413302">
+                    +265 884 41 33 02
+                </a>
+
+                <a href="mailto:teesclassics@gmail.com">
+                    teesclassics@gmail.com
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 Tee's Classic Catering Solutions
+            </span>
+
+            <span>
+                Lilongwe, Malawi
+            </span>
+
+        </div>
+
+    </div>
+
+</footer>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+========================================================= -->
+
+<script>
+
+    /* =========================================================
+       HERO SLIDESHOW
+    ========================================================= */
+
+    const slides = document.querySelectorAll(".hero-slide");
+    const dots = document.querySelectorAll(".slide-dot");
+
+    let currentSlide = 0;
+
+    function showSlide(index) {
+
+        slides.forEach((slide, i) => {
+            slide.classList.toggle("active", i === index);
+        });
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === index);
+        });
+
+    }
+
+    setInterval(() => {
+
+        currentSlide++;
+
+        if (currentSlide >= slides.length) {
+            currentSlide = 0;
+        }
+
+        showSlide(currentSlide);
+
+    }, 6000);
+
+
+    /* =========================================================
+       SCROLL REVEALS
+    ========================================================= */
+
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const revealObserver = new IntersectionObserver(
+        (entries) => {
+
+            entries.forEach((entry) => {
+
+                if (entry.isIntersecting) {
+
+                    entry.target.classList.add("visible");
+
+                    revealObserver.unobserve(entry.target);
+
+                }
+
+            });
+
+        },
+        {
+            threshold: 0.12
+        }
+    );
+
+    revealElements.forEach((element) => {
+        revealObserver.observe(element);
+    });
+
+
+    /* =========================================================
+       DEMO FORM
+    ========================================================= */
+
+    const form = document.getElementById("eventForm");
+
+    form.addEventListener("submit", (event) => {
+
+        event.preventDefault();
+
+        alert(
+            "Demo enquiry captured. Connect this form to the Tee's Classic backend, email or WhatsApp before production."
+        );
+
+    });
+
+</script>
+
+</body>
+</html>
